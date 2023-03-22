@@ -59,7 +59,7 @@ istream& operator>>(istream& is, Integer& number)
 
 ostream& operator<<(ostream& os, const Integer& number)
 {
-	cout << number.digitsSrc << "(" << number.baseSrc << ") = " << (number.sign == true ? '-' : '\0') << number.digitsDes << "(" << number.baseDes << ")";
+	cout << (number.sign == true ? "-" : "") << number.digitsSrc << "(" << number.baseSrc << ") = " << (number.sign == true ? '-' : '\0') << number.digitsDes << "(" << number.baseDes << ")";
 
 	return os;
 }
@@ -224,7 +224,7 @@ istream& operator>>(istream& is, RealNumber& number)
 
 ostream& operator<<(ostream& os, const RealNumber& number)
 {
-	cout << number.digitsSrc << "(" << number.baseSrc << ") = " << (number.sign == true ? '-' : '\0') << number.digitsDes << "(" << number.baseDes << ")";
+	cout << (number.sign == true ? "-" : "") << number.digitsSrc << "(" << number.baseSrc << ") = " << (number.sign == true ? '-' : '\0') << number.digitsDes << "(" << number.baseDes << ")";
 
 	return os;
 }
