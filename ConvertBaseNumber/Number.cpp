@@ -2,7 +2,7 @@
 
 bool Number::checkBase(const int& base)
 {
-	if (base < 2 or base >36)
+	if (base < 2 or base >62)
 	{
 		return false;
 	}
@@ -66,11 +66,10 @@ ostream& operator<<(ostream& os, const Integer& number)
 
 bool Number::isValid()
 {
-	this->upperCase();
 	int numDot = 0;
 	for (int i = 0; i < this->digitsSrc.size(); i++)
 	{
-		if (this->isNumChar(this->digitsSrc[i]) == true or this->isAlphabetChar(this->digitsSrc[i]) == true)
+		if (this->isNumChar(this->digitsSrc[i]) == true or this->isUpperAlphabetChar(this->digitsSrc[i]) == true or this->isLowerAlphabetChar(this->digitsSrc[i]) == true)
 		{
 			if (this->charToNum(this->digitsSrc[i]) >= this->baseSrc)
 			{
@@ -115,15 +114,24 @@ bool Number::isNumChar(const char& x)
 }
 //check if a character is a number
 
-bool Number::isAlphabetChar(const char& x)
+bool Number::isUpperAlphabetChar(const char& x)
 {
-	if ((x >= 'A' and x <= 'Z') or (x >= 'a' and x <= 'z'))
+	if ((x >= 'A' and x <= 'Z'))
 	{
 		return true;
 	}
 	return false;
 }
 
+bool Number::isLowerAlphabetChar(const char& x)
+{
+	if ((x >= 'a' and x <= 'z'))
+	{
+		return true;
+	}
+	return false;
+}
+//check if a character is a lower-case alphabet
 void Number::upperCase()
 {
 	for (int i = 0; i < this->digitsSrc.size(); i++)
@@ -142,7 +150,14 @@ int Number::charToNum(const char& x)
 	{
 		return int(x) - 48;
 	}
-	return int(x) - 55;
+	else if (this->isUpperAlphabetChar(x) == true)
+	{
+		return int(x) - 55;
+	}
+	else
+	{
+		return int(x) - 61;
+	}
 }
 
 char Number::NumTochar(const int& x)
@@ -151,7 +166,14 @@ char Number::NumTochar(const int& x)
 	{
 		return char(x + 48);
 	}
-	return char(x + 55);
+	else if (x >= 10 and x <= 35)
+	{
+		return char(x + 55);
+	}
+	else
+	{
+		return char(x + 61);
+	}
 }
 
 void Integer::convertTobase10()
@@ -177,7 +199,6 @@ void Integer::convertTobaseDes()
 void Integer::convert()
 {
 	this->getSign();
-	this->upperCase();
 	this->convertTobase10();
 	this->convertTobaseDes();
 }
@@ -205,17 +226,19 @@ istream& operator>>(istream& is, RealNumber& number)
 {
 	do
 	{
-		cout << "Enter the base of source number: ";
+		cout << "Enter the base of source number(integer number in [2,62]): ";
 		cin >> number.baseSrc;
 	} while (Number::checkBase(number.baseSrc) == false);
+	cout << "\n";
 	do
 	{
-		cout << "Enter the source number: ";
+		cout << "Enter the source number(digits must be exist in above base): ";
 		cin >> number.digitsSrc;
 	} while (number.isValid() == false);
+	cout << "\n";
 	do
 	{
-		cout << "Enter the destination base: ";
+		cout << "Enter the destination base(integer number in [2,62]): ";
 		cin >> number.baseDes;
 	} while (Number::checkBase(number.baseDes) == false);
 
@@ -259,7 +282,6 @@ void RealNumber::convertDecPart()
 void RealNumber::convert()
 {
 	this->getSign();
-	this->upperCase();
 	Integer a;
 	int posDot = this->digitsSrc.find('.');
 	if (posDot != string::npos)

@@ -21,8 +21,10 @@ protected:
 
 	bool isNumChar(const char& x);
 	//check if a character is a number
-	bool isAlphabetChar(const char& x);
-	//check if a character is a number
+	bool isUpperAlphabetChar(const char& x);
+	//check if a character is a upper-case alphabet
+	bool isLowerAlphabetChar(const char& x);
+	//check if a character is a lower-case alphabet
 
 	int charToNum(const char& x);
 	char NumTochar(const int& x);
