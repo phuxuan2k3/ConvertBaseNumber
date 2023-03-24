@@ -2,23 +2,49 @@
 
 int main()
 {
-	cout << "*note: In this program, we use the symbols:\n";
-	cout << "\t'0','1',... '9' to represent numbers 0,1,...,9\n";
-	cout << "\t'A','B',... 'Z' to represent numbers 10,11,...,35\n";
-	cout << "\t'a','b',... 'z' to represent numbers 36,37,...,62\n";
-	cout << "Similarly, we can EASILY represent even larger bases, as long as we find the appropriate symbols.\nHowever, in this program, the largest base that can be converted is 62.\n\n";
-
 	char choice;
 
 	do
 	{
-		RealNumber a;
-		cin >> a;
-		a.convert();
-		cout << a;
-		cout << "\n\nContinue? (y/n)";
+		system("cls");
+		RealConverter a;
+		cout << "***************************************************************" << endl;
+		cout << "\t\t\t=== BASE CONVERTER ===" << endl;
+		cout << endl;
+		cout << "Enter i: Show Introductions" << endl;
+		cout << "Enter q: Quit Program" << endl;
+		cout << "Enter any other character: Convert Number" << endl;
+		cout << "---------------------------------------------------------------" << endl;
+		cout << "Your choice: ";
 		cin >> choice;
-	} while (choice == 'y');
+		ignoreLine();
+		cout << "***************************************************************" << endl;
+		cout << endl;
 
+		if (choice == 'i') {
+			show_guide();
+		}
+		else if (choice == 'q') {
+			system("cls");
+			cout << endl;
+			cout << "Good bye!" << endl;
+			cout << endl;
+			break;
+		}
+		else {
+			a.input();
+			a.convert();
+			a.display();
+			cout << endl;
+			cout << endl;
+			cout << "***************************************************************" << endl;
+			cout << "Continue...";
+			system("pause");
+		}
+		system("cls");
+
+	} while (true);
+
+	system("pause");
 	return 0;
 }

@@ -1,10 +1,20 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <limits>
+
+#define MAX_BASE_DIGIT 62
 
 using namespace std;
 
-class Number
+
+void ignoreLine();
+double inputDouble(const char* inputMessage = "Enter a double value: ", const char* errMessage = "Invalid input, try again!", bool (*check) (double) = nullptr);
+int inputInt(const char* inputMessage = "Enter an Integer value: ", const char* errMessage = "Invalid input, try again!", bool (*check) (int) = nullptr);
+
+void show_guide();
+
+class Converter
 {
 protected:
 	bool sign;
@@ -14,7 +24,7 @@ protected:
 	string digitsDes;
 	int baseDes;
 
-	static bool checkBase(const int& base);
+	static bool checkBase(const int base);
 
 	bool isValid();
 	void getSign();
@@ -25,42 +35,52 @@ protected:
 	//check if a character is a upper-case alphabet
 	bool isLowerAlphabetChar(const char& x);
 	//check if a character is a lower-case alphabet
+	bool isUnderScore(const char& x);
+	//check if a character is a lower-case alphabet
 
 	int charToNum(const char& x);
-	char NumTochar(const int& x);
+	string NumTochar(const int& x);
 
 	void upperCase();
 };
 
-class Integer :Number
+class IntConverter : private Converter
 {
 public:
-	Integer();
-	Integer(const string& digitsSrc, const  int& baseSrc, const  int& baseDes);
+	IntConverter();
+	IntConverter(const string& digitsSrc, const  int& baseSrc, const  int& baseDes);
 	void setValue(const string& digitsSrc, const  int& baseSrc, const  int& baseDes);
-	friend istream& operator>>(istream& is, Integer& number);
-	friend ostream& operator<<(ostream& os, const Integer& number);
+
+	void input();
+	void display();
+	//friend istream& operator>>(istream& is, IntConverter& number);
+	//friend ostream& operator<<(ostream& os, const IntConverter& number);
 
 	void convertTobase10();
 	void convertTobaseDes();
 	void convert();
 
 	string getDigitsDes();
+	~IntConverter();
 };
 
-class RealNumber :Number
+class RealConverter : private Converter
 {
 	static const int numberDecDigit = 32; // the number of digits after comma
 	string decPartSrc;
 	double decPartValue;
 	string decPartDes;
-public:
-	RealNumber();
 
-	friend istream& operator>>(istream& is, RealNumber& number);
-	friend ostream& operator<<(ostream& os, const RealNumber& number);
+public:
+	RealConverter();
+	void input();
+	void display();
+	//friend istream& operator>>(istream& is, RealConverter& number);
+	//friend ostream& operator<<(ostream& os, const RealConverter& number);
 
 	void calculateDecPartValue();
 	void convertDecPart();
 	void convert();
+
+	~RealConverter();
 };
